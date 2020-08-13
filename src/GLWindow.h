@@ -19,9 +19,6 @@ public:
 	void onMouse(int button, int action, int mods);
 	void onScroll(double xoffset, double yoffset);
 
-protected:
-	void toggleFullscreen();
-
 private:
 	int width, height, pixelWidth = 1;
 	const char* title;
@@ -32,4 +29,5 @@ private:
 	vector2 windowPositionCache;
 
 	void framebufferSizeCallback(GLFWwindow *window, int width, int height);
+	void toggleFullscreen();
 };

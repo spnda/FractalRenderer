@@ -1,19 +1,24 @@
+/*
+ * mandelbrot fragment shader
+ * renders the mandelbrot set
+ */
+
 #version 460 core
 
-uniform int height;
-uniform int width;
+uniform int height; // total height in pixels
+uniform int width; // total width in pixels
 
 uniform float time;
-uniform float animationCounter; // value between -2.0 and 2.0
+uniform float animationCounter; // value between -2 and 2
 uniform float zoom;
 uniform float positionX;
 uniform float positionY;
 
 layout(location = 0) out vec4 colour;
 
-int MAX_ITERATIONS = 100;
+int MAX_ITERATIONS = 100; // quality (higher = slower)
 
-double julia(dvec2 z, dvec2 c) {
+double mandelbrot(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
 		dvec2 r = z * z;
 		if (r.x + r.y > 4.0) return i;
@@ -37,14 +42,6 @@ vec3 rgb(double ratio) {
 	return vec3(red, grn, blu) / 255.0;
 }
 
-vec3 gradient(double colour) {
-	vec2 pt = vec2(colour);
-	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
-	dvec3 color2 = dvec3(0.226, 0.0, 0.615) * colour;
-	double mixValue = distance(pt, vec2(0,1));
-	return vec3(mix(color1, color2, mixValue));
-}
-
 vec3 backgroundGradient(double colour) {
 	vec2 pt = gl_FragCoord.xy/vec2(width, height).xy;
 	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
@@ -54,11 +51,14 @@ vec3 backgroundGradient(double colour) {
 }
 
 void main(void) {
-	double x = (gl_FragCoord.x - 0.5 - (0)) / (2560 - (-2)) * 4.0 - 2.0;
-    double y = (gl_FragCoord.y - 0.5 - (0)) / (1440 - (-2)) * 4.0 - 2.0;
+	double x = (gl_FragCoord.x - 0.5 - (0)) / (width - (-2)) * 4.0 - 2.0;
+    double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
     x = x * zoom + positionX;
     y = y * zoom + positionY;
-	double fractal = julia(dvec2(x, y), dvec2(c1, c2)) / MAX_ITERATIONS;
+	double fractal = mandelbrot(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
 	vec3 colourOut = rgb(fractal);
+                // rgb or backgroundGradient can be used here
+                // to achieve either a gradient based on value
+                // or a nice-looking gradient
 	colour = vec4(colourOut, 1.0f);
 }
