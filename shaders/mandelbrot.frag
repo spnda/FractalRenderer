@@ -1,8 +1,7 @@
 /*
+ * spnda, Copyright (c) 2020
  * mandelbrot fragment shader
- * renders the mandelbrot set
  */
-
 #version 460 core
 
 uniform int height; // total height in pixels

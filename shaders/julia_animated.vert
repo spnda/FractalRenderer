@@ -1,4 +1,8 @@
-#version 460 core
+/*
+ * spnda, Copyright (c) 2020
+ * julia_animated vertex shader
+ */
+ #version 460 core
 
 layout (location = 0) in vec2 position;
 

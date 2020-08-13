@@ -1,6 +1,6 @@
 /*
- * mandelbrot fragment shader
- * renders a julia set
+ * spnda, Copyright (c) 2020
+ * julia fragment shader
  */
 #version 460 core
 

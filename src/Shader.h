@@ -1,3 +1,7 @@
+/*
+ * spnda, Copyright (c) 2020
+ * Shader.h
+ */
 #pragma once
 
 #include <gl/glew.h>

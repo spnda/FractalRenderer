@@ -1,3 +1,7 @@
+/*
+ * spnda, Copyright (c) 2020
+ * GLWindow.h
+ */
 #pragma once
 
 #include <GLFW\glfw3.h>

@@ -1,8 +1,7 @@
 /*
- * mandelbrot fragment shader
- * renders a julia set using the animationCounter
+ * spnda, Copyright (c) 2020
+ * julia_animated fragment shader
  */
-
 #version 460 core
 
 uniform int height;

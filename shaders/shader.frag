@@ -1,4 +1,8 @@
-#version 460 core
+/*
+ * spnda, Copyright (c) 2020
+ * shader fragment shader
+ */
+ #version 460 core
 
 uniform int height;
 uniform int width;

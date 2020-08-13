@@ -1,3 +1,7 @@
+/*
+ * spnda, Copyright (c) 2020
+ * GLWindow.cpp
+ */
 #include <iostream>
 #include <iomanip>
 

@@ -1,3 +1,7 @@
+/*
+ * spnda, Copyright (c) 2020
+ * vector2.h
+ */
 #pragma once
 
 struct vector2 {

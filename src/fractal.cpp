@@ -1,3 +1,7 @@
+/*
+ * spnda, Copyright (c) 2020
+ * fractal.cpp
+ */
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <chrono>
