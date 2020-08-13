@@ -25,7 +25,6 @@
     <ClInclude Include="src\vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\cpu.cpp" />
     <ClCompile Include="src\fractal.cpp" />
     <ClCompile Include="src\GLWindow.cpp" />
   </ItemGroup>

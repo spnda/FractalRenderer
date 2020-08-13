@@ -4,11 +4,19 @@
  */
 #pragma once
 
-struct vector2 {
+struct vector2i {
+	int x, y;
+
+	vector2i() : x(0), y(0) {};
+
+	vector2i(int x, int y) : x(x), y(y) {};
+	~vector2i() {}
+};
+
+struct vector2f {
 	float x, y;
 
-	vector2() : x(0), y(0) {};
-
-	vector2(float x, float y) : x(x), y(y) {};
-	~vector2() {}
+	vector2f() : x(0), y(0) {};
+	vector2f(float x, float y) : x(x), y(y) {};
+	~vector2f();
 };

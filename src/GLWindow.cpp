@@ -10,8 +10,8 @@
 #include "vector3.h"
 
 GLWindow::GLWindow(int width, int height, const char* title) : width(width), height(height), title(title) {
-	windowSizeCache = *new vector2(width, height);
-	windowPositionCache = *new vector2(0, 0);
+	windowSizeCache = *new vector2i(width, height);
+	windowPositionCache = *new vector2i(0, 0);
 };
 
 int GLWindow::init() {
@@ -72,6 +72,7 @@ int GLWindow::render() {
 
 	Shader shader(".\\shaders\\julia_animiert.vert", ".\\shaders\\julia_animiert.frag");
 
+	float time = 0.0;
 	int frameCounter = 0;
 	double frameTime = 0;
 
@@ -93,10 +94,10 @@ int GLWindow::render() {
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		shader.use();
 		shader.setFloat("time", time);
-		shader.setFloat("zoom", zoomFactor);
-		shader.setFloat("animationCounter", animationCounter);
-		shader.setFloat("positionX", positionX);
-		shader.setFloat("positionY", positionY);
+		shader.setDouble("zoom", zoomFactor);
+		shader.setDouble("animationCounter", animationCounter);
+		shader.setDouble("positionX", positionX);
+		shader.setDouble("positionY", positionY);
 		shader.setInt("height", height);
 		shader.setInt("width", width);
 		glDrawArrays(GL_TRIANGLES, 0, 4);

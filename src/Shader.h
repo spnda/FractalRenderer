@@ -85,6 +85,10 @@ public:
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
+    void setDouble(const std::string& name, double value) const {
+        glUniform1f(glGetUniformLocation(ID, name.c_str()), float(value));
+    }
+
 private:
 	void checkCompileErrors(unsigned int shader, std::string type) {
 		int success;

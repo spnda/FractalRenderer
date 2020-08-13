@@ -17,7 +17,7 @@ using namespace std::chrono;
 using std::shared_ptr;
 
 int main() {
-	GLWindow *glWindow = new GLWindow(2560, 1440, "julia");
+	GLWindow *glWindow = new GLWindow(2560, 1440, "FractalRenderer");
 	glWindow->init();
 	glWindow->render();
 	return 0;
