@@ -67,12 +67,9 @@ int GLWindow::render() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 	Shader shader(".\\shaders\\julia_animiert.vert", ".\\shaders\\julia_animiert.frag");
-	shader.setInt("height", height);
-	shader.setInt("width", width);
 
 	int frameCounter = 0;
 	double frameTime = 0;
-	float time = 0.0;
 
 	while (!glfwWindowShouldClose(window)) {
 		std::cout << std::fixed << std::setprecision(1) << frameTime << " ms  " << '\r';
@@ -81,8 +78,6 @@ int GLWindow::render() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		frameCounter++;
-		if (time < 1.0) time += (double)0.1;
-		else time = (double)0.0;
 
 		if (animationCounter < 2.0 && frameCounter % 2 == 0) animationCounter += (double)animationSpeed;
 		else if (frameCounter % 2 == 0) animationCounter = (double)0.0;
