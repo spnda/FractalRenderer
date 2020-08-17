@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{86d88cf1-70ee-407d-b1c2-939d7eb9f5fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vector3.h">
@@ -35,5 +38,34 @@
     <ClCompile Include="src\GLWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\julia.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia_animated.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia_animated.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia_animiert.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\shader.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\shader.vert">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

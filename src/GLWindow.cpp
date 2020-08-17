@@ -86,9 +86,7 @@ int GLWindow::render() {
 
 		// Calculate and display FPS
 		currentTime = glfwGetTime();
-		std::cout << currentTime << "\n";
 		double timeDelta = currentTime - lastTime;
-		std::cout << timeDelta << "\n";
 		if (timeDelta >= 1.0) { // Update window title every second
 			std::stringstream ss;
 			ss << "fractal " << " [" << fpsFrameCounter / timeDelta << " FPS]";
