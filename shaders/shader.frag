@@ -1,8 +1,4 @@
-/*
- * spnda, Copyright (c) 2020
- * shader fragment shader
- */
- #version 460 core
+#version 460 core
 
 uniform int height;
 uniform int width;
@@ -62,7 +58,7 @@ void main(void) {
     double y = (gl_FragCoord.y - 0.5 - (0)) / (1440 - (-2)) * 4.0 - 2.0;
     x = x * zoom + positionX;
     y = y * zoom + positionY;
-	double fractal = julia(dvec2(x, y), dvec2(c1, c2)) / MAX_ITERATIONS;
+	double fractal = julia(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
 	vec3 colourOut = rgb(fractal);
 	colour = vec4(colourOut, 1.0f);
 }

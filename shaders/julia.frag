@@ -1,21 +1,17 @@
-/*
- * spnda, Copyright (c) 2020
- * julia fragment shader
- */
 #version 460 core
 
-uniform int height; // total height in pixels
-uniform int width; // total width in pixels
+uniform int height; // insgesamte höhe des fensters in pixel
+uniform int width; // insgesamte breite des fensters in pixel
 
-uniform float time;
-uniform float animationCounter; // animation value between -2 and 2
+uniform float time; // zeit wert
+uniform float animationCounter; // wert zwischen -2 und 2
 uniform float zoom;
 uniform float positionX;
 uniform float positionY;
 
 layout(location = 0) out vec4 colour;
 
-int MAX_ITERATIONS = 100; // quality (higher = slower)
+int MAX_ITERATIONS = 100;  // qualität (höher = langsamer)
 
 double julia(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
@@ -54,12 +50,10 @@ void main(void) {
     double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
     x = x * zoom + positionX;
     y = y * zoom + positionY;
-                                            //-0.8, 0.156 is a example julia set.
+                                            //-0.8, 0.156 ist ein Beispiel Julia Set das ich auf Wikipedia gefunden habe.
                                             //https://en.wikipedia.org/wiki/Julia_set
 	double fractal = julia(dvec2(x, y), dvec2(-0.8, 0.156)) / MAX_ITERATIONS;
-	vec3 colourOut = backgroundGradient(fractal); 
-                // rgb or backgroundGradient can be used here
-                // to achieve either a gradient based on value
-                // or a nice-looking gradient
+	vec3 colourOut = backgroundGradient(fractal); // hier rgb mit backgroundGradient ersetzen, um einen farbverlauf
+                                   // als hintergrund zu haben
 	colour = vec4(colourOut, 1.0f);
 }

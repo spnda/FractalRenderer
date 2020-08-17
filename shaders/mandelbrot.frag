@@ -1,13 +1,9 @@
-/*
- * spnda, Copyright (c) 2020
- * mandelbrot fragment shader
- */
 #version 460 core
 
-uniform int height; // total height in pixels
-uniform int width; // total width in pixels
+uniform int height; // insgesamte höhe des fensters in pixel
+uniform int width; // insgesamte breite des fensters in pixel
 
-uniform float time;
+uniform float time; // zeit wert
 uniform float animationCounter; // value between -2 and 2
 uniform float zoom;
 uniform float positionX;
@@ -15,7 +11,7 @@ uniform float positionY;
 
 layout(location = 0) out vec4 colour;
 
-int MAX_ITERATIONS = 100; // quality (higher = slower)
+int MAX_ITERATIONS = 100; // qualität (höher = langsamer)
 
 double mandelbrot(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
@@ -55,9 +51,7 @@ void main(void) {
     x = x * zoom + positionX;
     y = y * zoom + positionY;
 	double fractal = mandelbrot(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
-	vec3 colourOut = rgb(fractal);
-                // rgb or backgroundGradient can be used here
-                // to achieve either a gradient based on value
-                // or a nice-looking gradient
+	vec3 colourOut = rgb(fractal); // hier rgb mit backgroundGradient ersetzen, um einen farbverlauf
+                                   // als hintergrund zu haben
 	colour = vec4(colourOut, 1.0f);
 }
