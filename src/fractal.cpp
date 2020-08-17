@@ -3,7 +3,6 @@
  * fractal.cpp
  */
 #include <iostream>
-#include <GLFW/glfw3.h>
 #include <chrono>
 #include <string>
 #include <sstream>
@@ -17,7 +16,7 @@ using namespace std::chrono;
 using std::shared_ptr;
 
 int main() {
-	GLWindow *glWindow = new GLWindow(2560, 1440, "FractalRenderer");
+	GLWindow *glWindow = new GLWindow(2560, 1440, "fractal");
 	glWindow->init();
 	glWindow->render();
 	return 0;

@@ -54,8 +54,8 @@ vec3 backgroundGradient(double colour) {
 }
 
 void main(void) {
-	double x = (gl_FragCoord.x - 0.5 - (0)) / (2560 - (-2)) * 4.0 - 2.0;
-    double y = (gl_FragCoord.y - 0.5 - (0)) / (1440 - (-2)) * 4.0 - 2.0;
+	double x = (gl_FragCoord.x - 0.5 - (0)) / (width - (-2)) * 4.0 - 2.0;
+    double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
     x = x * zoom + positionX;
     y = y * zoom + positionY;
 	double fractal = julia(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;

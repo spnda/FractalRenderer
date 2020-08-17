@@ -2,12 +2,16 @@
  * spnda, Copyright (c) 2020
  * GLWindow.cpp
  */
-#include <iostream>
 #include <iomanip>
+#include <string>
+#include <iostream>
+#include <filesystem>
 
 #include "Shader.h"
 #include "GLWindow.h"
 #include "vector3.h"
+
+namespace fs = std::filesystem;
 
 GLWindow::GLWindow(int width, int height, const char* title) : width(width), height(height), title(title) {
 	windowSizeCache = *new vector2i(width, height);
@@ -49,10 +53,22 @@ int GLWindow::init() {
 	std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 	std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
+
+	// get all shaders in the "shaders/" subfolder
+	for (const auto& file : fs::directory_iterator("./shaders")) {
+		if (file.is_regular_file()) {
+			fs::path fileName = file.path();
+			fs::path ext = fileName.extension();
+			if (ext == ".frag") {
+				shaders.push_back(*new Shader(fileName.replace_extension(".vert").string().c_str(), fileName.string().c_str()));
+			}
+		}
+	}
 };
 
 int GLWindow::render() {
 	if (window == nullptr) return -1;
+	if (shaders.size() == 0) return -1;
 
 	static const GLfloat vertexData[] = {
 		-1.0f, -1.0f, 0.0f,
@@ -70,7 +86,8 @@ int GLWindow::render() {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
-	Shader shader(".\\shaders\\shader.vert", ".\\shaders\\shader.frag");
+	//Shader shader(".\\shaders\\shader.vert", ".\\shaders\\shader.frag");
+	shader = &shaders[shaderIndex];
 
 	int frameCounter = 0;
 	double frameTime = 0;
@@ -103,16 +120,16 @@ int GLWindow::render() {
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		shader.use();
-		shader.setDouble("zoom", zoomFactor);
-		shader.setDouble("animationCounter", animationCounter);
-		shader.setDouble("positionX", positionX);
-		shader.setDouble("positionY", positionY);
-		shader.setInt("height", height);
-		shader.setInt("width", width);
+		shader->use();
+		shader->setDouble("zoom", zoomFactor);
+		shader->setDouble("animationCounter", animationCounter);
+		shader->setDouble("positionX", positionX);
+		shader->setDouble("positionY", positionY);
+		shader->setInt("height", height);
+		shader->setInt("width", width);
 		glDrawArrays(GL_TRIANGLES, 0, 4);
 		glDisableVertexAttribArray(0);
-		shader.disable();
+		shader->disable();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -139,6 +156,18 @@ void GLWindow::onKey(int key, int scancode, int action, int mods) {
 			break;
 		case GLFW_KEY_UP:
 			positionY += movementScale;
+			break;
+		case GLFW_KEY_F1:
+			if (action == GLFW_PRESS && shaderIndex - 1 >= 0) {
+				shaderIndex--;
+				shader = &shaders[shaderIndex];
+			}
+			break;
+		case GLFW_KEY_F2:
+			if (action == GLFW_PRESS && shaderIndex + 1 < shaders.size()) {
+				shaderIndex++;
+				shader = &shaders[shaderIndex];
+			}
 			break;
 		case GLFW_KEY_F5:
 			// reset
