@@ -59,7 +59,7 @@ int GLWindow::init() {
 		if (file.is_regular_file()) {
 			fs::path fileName = file.path();
 			fs::path ext = fileName.extension();
-			if (ext == ".frag") {
+			if (ext == ".frag" && fs::exists(fs::path(fileName).replace_extension(".vert"))) {
 				shaders.push_back(*new Shader(fileName.replace_extension(".vert").string().c_str(), fileName.string().c_str()));
 			}
 		}
