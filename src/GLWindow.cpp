@@ -70,19 +70,32 @@ int GLWindow::render() {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
-	Shader shader(".\\shaders\\julia_animiert.vert", ".\\shaders\\julia_animiert.frag");
+	Shader shader(".\\shaders\\shader.vert", ".\\shaders\\shader.frag");
 
-	float time = 0.0;
 	int frameCounter = 0;
 	double frameTime = 0;
 
-	while (!glfwWindowShouldClose(window)) {
-		std::cout << std::fixed << std::setprecision(1) << frameTime << " ms  " << '\r';
-		auto begin = high_resolution_clock::now();
+	double currentTime = glfwGetTime(), lastTime = 0.0;
+	int fpsFrameCounter = 0;
 
+	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		frameCounter++;
+		fpsFrameCounter++;
+
+		// Calculate and display FPS
+		currentTime = glfwGetTime();
+		std::cout << currentTime << "\n";
+		double timeDelta = currentTime - lastTime;
+		std::cout << timeDelta << "\n";
+		if (timeDelta >= 1.0) { // Update window title every second
+			std::stringstream ss;
+			ss << "fractal " << " [" << fpsFrameCounter / timeDelta << " FPS]";
+			glfwSetWindowTitle(window, ss.str().c_str());
+			fpsFrameCounter = 0;
+			lastTime = currentTime;
+		}
 
 		if (animationCounter < 2.0 && frameCounter % 2 == 0) animationCounter += (double)animationSpeed;
 		else if (frameCounter % 2 == 0) animationCounter = (double)0.0;
@@ -93,7 +106,6 @@ int GLWindow::render() {
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		shader.use();
-		shader.setFloat("time", time);
 		shader.setDouble("zoom", zoomFactor);
 		shader.setDouble("animationCounter", animationCounter);
 		shader.setDouble("positionX", positionX);
@@ -106,8 +118,6 @@ int GLWindow::render() {
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-		frameTime = std::chrono::duration_cast<std::chrono::milliseconds>(high_resolution_clock::now() - begin).count();
 	}
 
 	glfwTerminate();
