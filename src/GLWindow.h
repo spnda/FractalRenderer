@@ -7,12 +7,9 @@
 #include "Shader.h" // At the top due to glew initialization
 
 #include <GLFW\glfw3.h>
-#include <chrono>
 #include <vector>
 
 #include "vector2.h"
-
-using namespace std::chrono;
 
 class GLWindow {
 public:

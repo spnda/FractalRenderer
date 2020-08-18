@@ -65,6 +65,10 @@ public:
         glDeleteShader(fragment);
 	}
 
+    ~Shader() {
+        glUseProgram(0);
+    }
+
 	void use() {
 		glUseProgram(ID);
 	}

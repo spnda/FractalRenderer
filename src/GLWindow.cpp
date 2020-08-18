@@ -206,8 +206,8 @@ void GLWindow::onMouse(int button, int action, int mods) {
 	switch (button) {
 		case GLFW_MOUSE_BUTTON_LEFT:
 			if (action == GLFW_PRESS) {
-				double x, y;
-				glfwGetCursorPos(window, &x, &y);
+				//double x, y;
+				//glfwGetCursorPos(window, &x, &y);
 				//positionX += (x / width * 4.0 - 2.0) * zoomFactor;
 				//positionY += (y / height * 4.0 - 2.0) * zoomFactor;
 			}
