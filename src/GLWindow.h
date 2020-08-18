@@ -15,7 +15,7 @@ class GLWindow {
 public:
 	GLFWwindow* window;
 
-	GLWindow(int width, int height, const char* title);
+	GLWindow(const char* title);
 
 	int init();
 	int render();

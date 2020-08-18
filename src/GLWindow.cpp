@@ -13,18 +13,23 @@
 
 namespace fs = std::filesystem;
 
-GLWindow::GLWindow(int width, int height, const char* title) : width(width), height(height), title(title) {
-	windowSizeCache = *new vector2i(width, height);
+GLWindow::GLWindow(const char* title) : title(title) {
+	windowSizeCache = *new vector2i(0, 0);
 	windowPositionCache = *new vector2i(0, 0);
 };
 
 int GLWindow::init() {
 	if (!glfwInit()) return -1;
+	// set the window to be as big as the monitor, but don't be fullscreen.
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	width = mode->width; height = mode->height;
+	windowSizeCache = *new vector2i(width, height);
 	this->window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 	if (!window) {
 		glfwTerminate();
 		return -1;
 	}
+
 	glfwMakeContextCurrent(window);
 	glfwSetWindowUserPointer(window, &window);
 	glfwSetFramebufferSizeCallback(window, [](GLFWwindow *handle, int width, int height) noexcept -> void {
