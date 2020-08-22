@@ -66,7 +66,9 @@ int GLWindow::init() {
 			fs::path fileName = file.path();
 			fs::path ext = fileName.extension();
 			if (ext == ".frag" && fs::exists(fs::path(fileName).replace_extension(".vert"))) {
-				shaders.push_back(*new Shader(fileName.replace_extension(".vert").string().c_str(), fileName.string().c_str()));
+				Shader temp = *new Shader(fileName.replace_extension(".vert").string().c_str(), fileName.string().c_str());
+				temp.name = fileName.filename().replace_extension("").string();
+				shaders.push_back(temp);
 			}
 		}
 	}
@@ -112,7 +114,7 @@ int GLWindow::render() {
 		double timeDelta = currentTime - lastTime;
 		if (timeDelta >= 1.0) { // Update window title every second
 			std::stringstream ss;
-			ss << "fractal " << " [" << fpsFrameCounter / timeDelta << " FPS]";
+			ss << "fractal " << " [" << shader->name << ", " << fpsFrameCounter / timeDelta << " FPS]";
 			glfwSetWindowTitle(window, ss.str().c_str());
 			fpsFrameCounter = 0;
 			lastTime = currentTime;
@@ -167,12 +169,18 @@ void GLWindow::onKey(int key, int scancode, int action, int mods) {
 			if (action == GLFW_PRESS && shaderIndex - 1 >= 0) {
 				shaderIndex--;
 				shader = &shaders[shaderIndex];
+				std::stringstream ss;
+				ss << "fractal " << " [" << shader->name << ", 0 FPS]";
+				glfwSetWindowTitle(window, ss.str().c_str());
 			}
 			break;
 		case GLFW_KEY_F2:
 			if (action == GLFW_PRESS && shaderIndex + 1 < shaders.size()) {
 				shaderIndex++;
 				shader = &shaders[shaderIndex];
+				std::stringstream ss;
+				ss << "fractal " << " [" << shader->name << ", 0 FPS]";
+				glfwSetWindowTitle(window, ss.str().c_str());
 			}
 			break;
 		case GLFW_KEY_F5:

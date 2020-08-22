@@ -13,8 +13,9 @@
 class Shader {
 public:
 	unsigned int ID;
+    std::string name;
 
-	Shader(const char* vertexPath, const char* fragmentPath) {
+	Shader(const char *vertexPath, const char *fragmentPath) {
 		// read shaders from file
         std::string vertexCode;
         std::string fragmentCode;
