@@ -7,15 +7,14 @@
 uniform int height;
 uniform int width;
 
-uniform float time;
-uniform float animationCounter; // value between -2.0 and 2.0
+uniform float animationCounter;
 uniform float zoom;
 uniform float positionX;
 uniform float positionY;
 
 layout(location = 0) out vec4 colour;
 
-int MAX_ITERATIONS = 100; // quality (higher = slower)
+int MAX_ITERATIONS = 100;
 
 double julia(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
@@ -49,15 +48,16 @@ vec3 backgroundGradient(double colour) {
 	return vec3(mix(color1, color2, mixValue));
 }
 
+double translateCoordinates(float val, int maxV, int minV) {
+    return ((val - (minV)) / (maxV - (minV))) * 4.0 - 2.0;
+}
+
 void main(void) {
-	double x = (gl_FragCoord.x - 0.5 - (0)) / (width - (-2)) * 4.0 - 2.0;
-    double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
-    x = x * zoom + positionX;
-    y = y * zoom + positionY;
+	double x = translateCoordinates(int(gl_FragCoord.x), width, 0);
+	double y = translateCoordinates(int(gl_FragCoord.y), height, 0);
+	x = x * zoom + positionX;
+	y = y * zoom + positionY;
 	double fractal = julia(dvec2(x, y), dvec2(animationCounter, animationCounter)) / MAX_ITERATIONS;
 	vec3 colourOut = rgb(fractal);
-                // rgb or backgroundGradient can be used here
-                // to achieve either a gradient based on value
-                // or a nice-looking gradient
 	colour = vec4(colourOut, 1.0f);
 }

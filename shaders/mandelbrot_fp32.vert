@@ -1,4 +1,8 @@
-#version 460 core
+/*
+ * spnda, Copyright (c) 2020
+ * base shader fragment shader
+ */
+#version 330 core
 
 layout (location = 0) in vec2 position;
 

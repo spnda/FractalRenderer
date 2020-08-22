@@ -52,21 +52,24 @@
     <None Include="shaders\julia_animated.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="shaders\julia_animiert.frag">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="shaders\mandelbrot.frag">
       <Filter>Shader</Filter>
     </None>
     <None Include="shaders\mandelbrot.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="shaders\shader.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="shaders\shader.vert">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="packages.config" />
+    <None Include="shaders\mandelbrot_gradient.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot_gradient.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot_fp32.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot_fp32.frag">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

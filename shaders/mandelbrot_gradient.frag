@@ -1,10 +1,13 @@
+/*
+ * spnda, Copyright (c) 2020
+ * base shader fragment shader
+ */
 #version 460 core
 
 uniform int height;
 uniform int width;
 
-uniform float time;
-uniform float animationCounter; // value between -2.0 and 2.0
+uniform float animationCounter;
 uniform float zoom;
 uniform float positionX;
 uniform float positionY;
@@ -13,7 +16,7 @@ layout(location = 0) out vec4 colour;
 
 int MAX_ITERATIONS = 100;
 
-double julia(dvec2 z, dvec2 c) {
+double mandelbrot(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
 		dvec2 r = z * z;
 		if (r.x + r.y > 4.0) return i;
@@ -37,14 +40,6 @@ vec3 rgb(double ratio) {
 	return vec3(red, grn, blu) / 255.0;
 }
 
-vec3 gradient(double colour) {
-	vec2 pt = vec2(colour);
-	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
-	dvec3 color2 = dvec3(0.226, 0.0, 0.615) * colour;
-	double mixValue = distance(pt, vec2(0,1));
-	return vec3(mix(color1, color2, mixValue));
-}
-
 vec3 backgroundGradient(double colour) {
 	vec2 pt = gl_FragCoord.xy/vec2(width, height).xy;
 	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
@@ -53,12 +48,16 @@ vec3 backgroundGradient(double colour) {
 	return vec3(mix(color1, color2, mixValue));
 }
 
+double translateCoordinates(double val, int maxV, int minV) {
+    return ((val - (minV)) / (maxV - (minV))) * 4.0 - 2.0;
+}
+
 void main(void) {
-	double x = (gl_FragCoord.x - 0.5 - (0)) / (width - (-2)) * 4.0 - 2.0;
-    double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
-    x = x * zoom + positionX;
-    y = y * zoom + positionY;
-	double fractal = julia(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
-	vec3 colourOut = rgb(fractal);
+	double x = translateCoordinates(int(gl_FragCoord.x), width, 0);
+	double y = translateCoordinates(int(gl_FragCoord.y), height, 0);
+	x = x * zoom + positionX;
+	y = y * zoom + positionY;
+	double fractal = mandelbrot(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
+	vec3 colourOut = backgroundGradient(fractal);
 	colour = vec4(colourOut, 1.0f);
 }

@@ -1,17 +1,20 @@
+/*
+ * spnda, Copyright (c) 2020
+ * base shader fragment shader
+ */
 #version 460 core
 
-uniform int height; // insgesamte höhe des fensters in pixel
-uniform int width; // insgesamte breite des fensters in pixel
+uniform int height;
+uniform int width;
 
-uniform float time; // zeit wert
-uniform float animationCounter; // wert zwischen -2 und 2
+uniform float animationCounter;
 uniform float zoom;
 uniform float positionX;
 uniform float positionY;
 
 layout(location = 0) out vec4 colour;
 
-int MAX_ITERATIONS = 100;  // qualität (höher = langsamer)
+int MAX_ITERATIONS = 100;
 
 double julia(dvec2 z, dvec2 c) {
 	for (int i = 0; i < MAX_ITERATIONS; i++) {
@@ -45,15 +48,17 @@ vec3 backgroundGradient(double colour) {
 	return vec3(mix(color1, color2, mixValue));
 }
 
+double translateCoordinates(float val, int maxV, int minV) {
+    return ((val - (minV)) / (maxV - (minV))) * 4.0 - 2.0;
+}
+
 void main(void) {
-	double x = (gl_FragCoord.x - 0.5 - (0)) / (width - (-2)) * 4.0 - 2.0;
-    double y = (gl_FragCoord.y - 0.5 - (0)) / (height - (-2)) * 4.0 - 2.0;
-    x = x * zoom + positionX;
-    y = y * zoom + positionY;
-                                            //-0.8, 0.156 ist ein Beispiel Julia Set das ich auf Wikipedia gefunden habe.
-                                            //https://en.wikipedia.org/wiki/Julia_set
+	double x = translateCoordinates(int(gl_FragCoord.x), width, 0);
+	double y = translateCoordinates(int(gl_FragCoord.y), height, 0);
+	x = x * zoom + positionX;
+	y = y * zoom + positionY;
+    //https://en.wikipedia.org/wiki/Julia_set for more examples to put instead of dvec2(-0.5, 0.156)
 	double fractal = julia(dvec2(x, y), dvec2(-0.8, 0.156)) / MAX_ITERATIONS;
-	vec3 colourOut = backgroundGradient(fractal); // hier rgb mit backgroundGradient ersetzen, um einen farbverlauf
-                                   // als hintergrund zu haben
+	vec3 colourOut = backgroundGradient(fractal);
 	colour = vec4(colourOut, 1.0f);
 }
