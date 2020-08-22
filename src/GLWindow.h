@@ -36,4 +36,5 @@ private:
 
 	void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 	void toggleFullscreen();
+	void takeScreenshot();
 };

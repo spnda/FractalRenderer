@@ -67,5 +67,6 @@
     <None Include="shaders\shader.vert">
       <Filter>Shader</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

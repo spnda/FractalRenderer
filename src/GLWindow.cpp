@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include <lodepng.h>
 
 #include "Shader.h"
 #include "GLWindow.h"
@@ -91,7 +92,6 @@ int GLWindow::render() {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
-	//Shader shader(".\\shaders\\shader.vert", ".\\shaders\\shader.frag");
 	shader = &shaders[shaderIndex];
 
 	int frameCounter = 0;
@@ -204,6 +204,10 @@ void GLWindow::onKey(int key, int scancode, int action, int mods) {
 			if (action != GLFW_PRESS) break;
 			toggleFullscreen();
 			break;
+		case GLFW_KEY_F12:
+			if (action != GLFW_PRESS) break;
+			takeScreenshot();
+			break;
 	}
 };
 
@@ -239,4 +243,34 @@ void GLWindow::toggleFullscreen() {
 
 void GLWindow::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
+}
+
+// TODO: In the future, take screenshots at a very high resolution to allow for zooming inside the image.
+void GLWindow::takeScreenshot() {
+	std::stringstream ss;
+	ss << std::chrono::system_clock::now().time_since_epoch().count() << ".png";
+	const std::string tmp = ss.str(); // tmp to avoid dangling pointer
+	const char* fn = tmp.c_str();
+	// read pixels
+	int n = 4 * width * height;
+	GLubyte *pixels = new GLubyte[n];
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+	if (glGetError() != GL_NO_ERROR) {
+		std::cout << "Error: Unable to read pixels." << std::endl;
+		return;
+	}
+	// the image will go from top left to bottom right
+	// the opengl canvas goes from bottom left to top right.
+	// therefore, convert the array to a 2d vector and then flip it.
+	unsigned char *newp = new unsigned char[n];
+	for (int i = 1; i < height; i++) { // i should be the amount of lines in this image
+		int off = n - (width * i * 4);
+		for (int j = 0; j < width * 4; j++) {
+			newp[off + j] = pixels[(width * i * 4) + j];
+		}
+	}
+	
+	// see https://en.wikipedia.org/wiki/Portable_Network_Graphics
+	lodepng::encode(fn, newp, width, height, LCT_RGBA, 8U);
 }
