@@ -1,6 +1,6 @@
 /*
  * spnda, Copyright (c) 2020
- * julia_animated vertex shader
+ * julia animated vertex shader
  */
  #version 460 core
 

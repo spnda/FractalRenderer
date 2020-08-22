@@ -1,6 +1,6 @@
 /*
  * spnda, Copyright (c) 2020
- * base shader fragment shader
+ * mandelbrot gradient fragment shader
  */
 #version 460 core
 
@@ -25,21 +25,6 @@ double mandelbrot(dvec2 z, dvec2 c) {
 	return MAX_ITERATIONS;
 }
 
-vec3 rgb(double ratio) {
-    double normalized = ratio * 256 * 6;
-    int x = int(mod(normalized, 256.0));
-    int red = 0, grn = 0, blu = 0;
-    switch (int(normalized / 256)) {
-		case 0: red = 255;      grn = x;        blu = 0;       break;//red
-		case 1: red = 255 - x;  grn = 255;      blu = 0;       break;//yellow
-		case 2: red = 0;        grn = 255;      blu = x;       break;//green
-		case 3: red = 0;        grn = 255 - x;  blu = 255;     break;//cyan
-		case 4: red = x;        grn = 0;        blu = 255;     break;//blue
-		case 5: red = 255;      grn = 0;        blu = 255 - x; break;//magenta
-    }
-	return vec3(red, grn, blu) / 255.0;
-}
-
 vec3 backgroundGradient(double colour) {
 	vec2 pt = gl_FragCoord.xy/vec2(width, height).xy;
 	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
@@ -49,7 +34,7 @@ vec3 backgroundGradient(double colour) {
 }
 
 double translateCoordinates(double val, int maxV, int minV) {
-    return ((val - (minV)) / (maxV - (minV))) * 4.0 - 2.0;
+	return ((val - (minV)) / (maxV - (minV))) * 4.0 - 2.0;
 }
 
 void main(void) {

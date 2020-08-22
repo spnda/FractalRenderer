@@ -1,6 +1,6 @@
 /*
  * spnda, Copyright (c) 2020
- * base shader fragment shader
+ * mandelbrot fp32 vertex shader
  */
 #version 330 core
 

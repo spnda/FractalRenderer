@@ -4,7 +4,7 @@
  */
 #include "GLWindow.h"
 
-int main() {
+int main(int argc, char** argv) {
 	GLWindow *glWindow = new GLWindow("fractal");
 	glWindow->init();
 	glWindow->render();

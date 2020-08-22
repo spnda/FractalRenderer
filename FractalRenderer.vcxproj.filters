@@ -40,12 +40,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\julia.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="shaders\julia.vert">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="shaders\julia_animated.frag">
       <Filter>Shader</Filter>
     </None>
@@ -69,6 +63,18 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="shaders\mandelbrot_fp32.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot_gradient_2.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\mandelbrot_gradient_2.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia_gradient.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shaders\julia_gradient.frag">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

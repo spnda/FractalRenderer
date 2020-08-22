@@ -30,16 +30,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shaders\julia.frag" />
-    <None Include="shaders\julia.vert" />
     <None Include="shaders\julia_animated.frag" />
     <None Include="shaders\julia_animated.vert" />
+    <None Include="shaders\julia_gradient.frag" />
+    <None Include="shaders\julia_gradient.vert" />
     <None Include="shaders\mandelbrot.frag" />
     <None Include="shaders\mandelbrot.vert" />
     <None Include="shaders\mandelbrot_fp32.frag" />
     <None Include="shaders\mandelbrot_fp32.vert" />
     <None Include="shaders\mandelbrot_gradient.frag" />
     <None Include="shaders\mandelbrot_gradient.vert" />
+    <None Include="shaders\mandelbrot_gradient_2.frag" />
+    <None Include="shaders\mandelbrot_gradient_2.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -1,6 +1,6 @@
 /*
  * spnda, Copyright (c) 2020
- * base shader fragment shader
+ * mandelbrot gradient vertex shader
  */
 #version 460 core
 
