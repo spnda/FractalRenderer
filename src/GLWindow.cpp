@@ -72,6 +72,9 @@ int GLWindow::init() {
 			}
 		}
 	}
+
+	// End the program if no shaders were found.
+	if (shaders.size() == 0) return -1;
 };
 
 int GLWindow::render() {

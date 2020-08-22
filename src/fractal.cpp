@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv) {
 	GLWindow *glWindow = new GLWindow("fractal");
-	glWindow->init();
+	if (glWindow->init() != 0) return -1;
 	glWindow->render();
 	return 0;
 }
