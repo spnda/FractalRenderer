@@ -91,6 +91,7 @@ int GLWindow::render() {
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+	glfwSwapInterval(0);
 
 	shader = &shaders[shaderIndex];
 
