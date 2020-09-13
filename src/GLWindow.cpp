@@ -102,6 +102,7 @@ int GLWindow::render() {
 
 	int frameCounter = 0;
 	double frameTime = 0;
+	double iTime = 0;
 
 	double currentTime = glfwGetTime(), lastTime = 0.0;
 	int fpsFrameCounter = 0;
@@ -114,6 +115,7 @@ int GLWindow::render() {
 
 		// Calculate and display FPS
 		currentTime = glfwGetTime();
+		iTime = currentTime;
 		double timeDelta = currentTime - lastTime;
 		if (timeDelta >= 1.0) { // Update window title every second
 			std::stringstream ss;
@@ -133,11 +135,9 @@ int GLWindow::render() {
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		shader->use();
 		shader->setDouble("zoom", zoomFactor);
-		shader->setDouble("animationCounter", animationCounter);
-		shader->setDouble("positionX", positionX);
-		shader->setDouble("positionY", positionY);
-		shader->setInt("height", height);
-		shader->setInt("width", width);
+		shader->setDouble("iTime", iTime);
+		shader->setVec2("position", (float)positionX, (float)positionY);
+		shader->setVec2("iResolution", (float)width, (float)height);
 		glDrawArrays(GL_TRIANGLES, 0, 4);
 		glDisableVertexAttribArray(0);
 		shader->disable();

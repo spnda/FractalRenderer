@@ -4,13 +4,11 @@
  */
 #version 460 core
 
-uniform int height;
-uniform int width;
-
-uniform float animationCounter;
+uniform float iTime;
 uniform float zoom;
-uniform float positionX;
-uniform float positionY;
+
+uniform vec2 position;
+uniform vec2 iResolution;
 
 layout(location = 0) out vec4 colour;
 
@@ -26,7 +24,7 @@ double mandelbrot(dvec2 z, dvec2 c) {
 }
 
 vec3 backgroundGradient(double colour) {
-	vec2 pt = gl_FragCoord.xy/vec2(width, height).xy;
+	vec2 pt = gl_FragCoord.xy/vec2(iResolution);
 	dvec3 color1 = dvec3(1.0, 0.55, 0.0) * colour;
 	dvec3 color2 = dvec3(0.226, 0.0, 0.615) * colour;
 	double mixValue = distance(pt, vec2(0,1));
@@ -38,10 +36,10 @@ double translateCoordinates(double val, int maxV, int minV) {
 }
 
 void main(void) {
-	double x = translateCoordinates(int(gl_FragCoord.x), width, 0);
-	double y = translateCoordinates(int(gl_FragCoord.y), height, 0);
-	x = x * zoom + positionX;
-	y = y * zoom + positionY;
+	double x = translateCoordinates(int(gl_FragCoord.x), int(iResolution.x), 0);
+	double y = translateCoordinates(int(gl_FragCoord.y), int(iResolution.y), 0);
+	x = x * zoom + position.x;
+	y = y * zoom + position.y;
 	double fractal = mandelbrot(dvec2(x, y), dvec2(x, y)) / MAX_ITERATIONS;
 	vec3 colourOut = backgroundGradient(fractal);
 	colour = vec4(colourOut, 1.0f);

@@ -5,9 +5,9 @@
 #pragma once
 
 struct vector3 {
-	double x, y, z;
+	float x, y, z;
 
 	vector3() : x(0), y(0), z(0) {};
-	vector3(double x, double y, double z) : x(x), y(y), z(z) {};
+	vector3(float x, float y, float z) : x(x), y(y), z(z) {};
 	~vector3() {}
 };

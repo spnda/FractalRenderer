@@ -4,13 +4,11 @@
  */
 #version 330 core
 
-uniform int height;
-uniform int width;
-
-uniform float animationCounter;
+uniform float iTime;
 uniform float zoom;
-uniform float positionX;
-uniform float positionY;
+
+uniform vec2 position;
+uniform vec2 iResolution;
 
 layout(location = 0) out vec4 colour;
 
@@ -45,10 +43,10 @@ float translateCoordinates(float val, int maxV, int minV) {
 }
 
 void main(void) {
-	float x = translateCoordinates(int(gl_FragCoord.x), width, 0);
-	float y = translateCoordinates(int(gl_FragCoord.y), height, 0);
-	x = x * zoom + positionX;
-	y = y * zoom + positionY;
+	float x = translateCoordinates(int(gl_FragCoord.x), int(iResolution.x), 0);
+	float y = translateCoordinates(int(gl_FragCoord.y), int(iResolution.y), 0);
+	x = x * zoom + position.x;
+	y = y * zoom + position.y;
 	float fractal = julia(vec2(x, y), vec2(x, y)) / MAX_ITERATIONS;
 	vec3 colourOut = rgb(fractal);
 	colour = vec4(colourOut, 1.0f);

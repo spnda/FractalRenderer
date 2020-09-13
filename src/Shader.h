@@ -10,6 +10,9 @@
 #include <sstream>
 #include <iostream>
 
+#include "vector2.h"
+#include "vector3.h"
+
 class Shader {
 public:
 	unsigned int ID;
@@ -92,6 +95,16 @@ public:
 
 	void setDouble(const std::string& name, double value) const {
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), float(value));
+	}
+
+	void setVec2(const std::string& name, float x, float y) const {
+		float vec2[2] = {x, y};
+		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, vec2);
+	}
+	
+	void setVec3(const std::string& name, vector3 value) const {
+		float vec3[3] = {value.x, value.y, value.z};
+		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, vec3);
 	}
 
 private:
