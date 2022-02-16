@@ -1,6 +1,6 @@
 # FractalRenderer
 
-A simple OpenGL shader program to render fractal geometry.
+A simple OpenGL 4.6 renderer written in C++17 to render fractal geometry using compute shaders.
 
 ![image0](https://github.com/spnda/FractalRenderer/blob/master/images/julia_dark.png)
 

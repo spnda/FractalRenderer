@@ -6,16 +6,17 @@
 //
 // http://iquilezles.org/www/articles/mset_smooth/mset_smooth.htm
 
-#version 330 core
+#version 460 core
 
 uniform float iTime;
-uniform float animationCounter;
 uniform float zoom;
 
 uniform vec2 position;
-uniform vec2 iResolution;
+uniform ivec2 iResolution;
 
-layout(location = 0) out vec4 fragColor;
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(binding = 0, rgba8) writeonly uniform image2D colorTex;
 
 #define AA 2 // increase this if you have a very fast GPU
 
@@ -47,7 +48,7 @@ float mandelbrot(in vec2 c) {
 }
 
 void main(void) {
-    vec2 fragCoord = gl_FragCoord.xy;
+    vec2 fragCoord = gl_GlobalInvocationID.xy;
     
     vec3 col = vec3(0.0);
     
@@ -72,5 +73,5 @@ void main(void) {
 
     col /= float(AA * AA);
 
-    fragColor = vec4(col, 1.0);
+	imageStore(colorTex, ivec2(fragCoord), vec4(col, 1.0));
 }
